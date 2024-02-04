@@ -7,8 +7,6 @@ using UnityEngine.InputSystem;
 public class GameInput : MonoBehaviour
 {
     private const string PLAYER_PREFS_BINDINGS = "InputBindings";
-    // private GameInput gameInput; // Asegúrate de asignar esto apropiadamente, quizás en Start() o Awake().
-    // private HashSet<string> currentBindings;
 
     public static GameInput Instance { get; private set; }
 
@@ -28,7 +26,6 @@ public class GameInput : MonoBehaviour
     }
 
     private PlayerInputActions playerInputActions;
-
     private void Awake()
     {
         Instance = this;
@@ -105,28 +102,13 @@ public class GameInput : MonoBehaviour
         }
     }
 
-    // private void LoadCurrentBindings()
-    // {
-    //     currentBindings = new HashSet<string>();
-
-    //     // Iterar sobre todas las posibles asignaciones y agregarlas al conjunto.
-    //     foreach (GameInput.Binding binding in Enum.GetValues(typeof(GameInput.Binding)))
-    //     {
-    //         string bindingText = gameInput.GetBindingText(binding);
-    //         if (!string.IsNullOrEmpty(bindingText))
-    //         {
-    //             currentBindings.Add(bindingText);
-    //         }
-    //     }
-    // }
-
     public void RebindBinding(Binding binding, Action onActionRebound)
     {
-        Debug.Log(binding);
         playerInputActions.Player.Disable();
 
         InputAction inputAction;
         int bindingIndex;
+        string previousBinding;
 
         switch (binding)
         {
@@ -161,20 +143,69 @@ public class GameInput : MonoBehaviour
                 break;
         }
 
+        previousBinding = inputAction.bindings[bindingIndex].ToDisplayString();
+
+        // Initially, we attempted to use the callback.Cancel() method to revert the key rebinding operation
+        // when a duplicate key was detected. The expectation was that Cancel() would undo any changes made
+        // during the interactive rebinding process. However, we found that callback.Cancel() did not effectively revert the changes
+        // in our context, leaving the system in a state where the newly assigned duplicate key was temporarily applied.
+        //
+        // To properly handle duplicate key rebinding and ensure the system's state remained consistent,
+        // we decided to implement an alternative solution. Instead of relying on Cancel() to revert changes,
+        // we now explicitly save the previous key binding before starting the rebinding process.
+        // If a duplicate key is detected, we manually apply a key binding override to restore the previous key.
+        // This solution ensures that only valid changes are saved and maintains the consistency of our key binding system.
+        //
+        // This change was implemented as a practical solution to the unexpected behavior of callback.Cancel()
+        // and to enhance the robustness of our key rebinding logic.
         inputAction.PerformInteractiveRebinding(bindingIndex)
             .WithControlsExcluding("Mouse")
             .WithControlsExcluding("<Keyboard>/escape")
             .WithControlsExcluding("<Gamepad>/Start")
+            .WithCancelingThrough("<Keyboard>/escape")
             .OnMatchWaitForAnother(.1f)
+            .OnCancel(callback =>
+            {
+                playerInputActions.Player.Enable();
+                callback.Dispose();
+                onActionRebound();
+            })
             .OnComplete(callback =>
             {
-                callback.Dispose();
-                playerInputActions.Player.Enable();
-                onActionRebound();
+                string newKey = callback.selectedControl.displayName;
+                if (!IsKeyAlreadyBound(newKey, binding))
+                {
+                    playerInputActions.Player.Enable();
 
-                PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, playerInputActions.SaveBindingOverridesAsJson());
-                PlayerPrefs.Save();
+                    PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, playerInputActions.SaveBindingOverridesAsJson());
+                    PlayerPrefs.Save();
+                }
+                else
+                {
+                    inputAction.ApplyBindingOverride(bindingIndex, previousBinding);
+                    playerInputActions.Player.Enable();
+
+                }
+                callback.Dispose();
+                onActionRebound();
             })
             .Start();
     }
+
+    public bool IsKeyAlreadyBound(string newBinding, Binding bindingToRebind)
+    {
+        foreach (Binding binding in Enum.GetValues(typeof(Binding)))
+        {
+            if (binding != bindingToRebind)
+            {
+                string currentBindingText = GetBindingText(binding);
+                if (newBinding.Equals(currentBindingText, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }
