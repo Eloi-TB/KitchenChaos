@@ -19,6 +19,12 @@ public class TutorialUI : MonoBehaviour
 
     private void Start()
     {
+        GameInput.Instance.OnBindingRebind += GameInput_OnBindingRebind;
+        UpdateVisual();
+    }
+
+    private void GameInput_OnBindingRebind(object sender, EventArgs e)
+    {
         UpdateVisual();
     }
 
