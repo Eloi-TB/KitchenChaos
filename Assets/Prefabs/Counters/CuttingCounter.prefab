@@ -247,6 +247,16 @@ PrefabInstance:
       propertyPath: hasProgressGameObject
       value: 
       objectReference: {fileID: 2213695115831338747}
+    - target: {fileID: 4899188701934417858, guid: 62abd61d93efd234395e973a7af7fecb,
+        type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899188701934417858, guid: 62abd61d93efd234395e973a7af7fecb,
+        type: 3}
+      propertyPath: m_EffectDistance.y
+      value: 0.05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
