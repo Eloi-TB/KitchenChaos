@@ -156,6 +156,8 @@ GameObject:
   - component: {fileID: 8470611712385272498}
   - component: {fileID: 5565076729031190001}
   - component: {fileID: 9160144426618783812}
+  - component: {fileID: 8763699358335116499}
+  - component: {fileID: 5666339797829396640}
   m_Layer: 6
   m_Name: StoveBurnWarningUI
   m_TagString: Untagged
@@ -272,6 +274,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stoveCounter: {fileID: 3846459794270255477}
+--- !u!95 &8763699358335116499
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7194438909762993108}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3189b6908d64baf4ab05f70037b183a6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!225 &5666339797829396640
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7194438909762993108}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8441082685236191904
 GameObject:
   m_ObjectHideFlags: 0
