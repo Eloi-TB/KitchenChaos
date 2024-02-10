@@ -9,7 +9,7 @@ public class StoveCounterSound : MonoBehaviour
 
     private AudioSource audioSource;
     private float warningSoundTimer;
-    float warningSoundTimerMax = 1f;
+    float warningSoundTimerMax = .2f;
     private bool playWarningSound;
 
     private void Awake()
