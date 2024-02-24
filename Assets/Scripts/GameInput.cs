@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class GameInput : MonoBehaviour
 {
     private const string PLAYER_PREFS_BINDINGS = "InputBindings";
+    private const string ANY_KEY = "Any Key";
 
     public static GameInput Instance { get; private set; }
 
@@ -200,6 +201,7 @@ public class GameInput : MonoBehaviour
                 Debug.Log(newKey);
                 if (!IsKeyAlreadyBound(newKey, binding))
                 if (!IsKeyAlreadyBound(newKey, binding) && newKey.Equals("Any Key", StringComparison.OrdinalIgnoreCase))
+                if (!IsKeyAlreadyBound(newKey, binding) && !newKey.Equals(ANY_KEY, StringComparison.OrdinalIgnoreCase))
                 {
                     playerInputActions.Player.Enable();
 
