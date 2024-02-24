@@ -9,8 +9,10 @@ public class OptionsUI : MonoBehaviour
 {
     public static OptionsUI Instance { get; private set; }
 
-    [SerializeField] private Button soundEffectsButton;
-    [SerializeField] private Button musicButton;
+    [SerializeField] private Button soundEffectsButtonIncrease;
+    [SerializeField] private Button soundEffectsButtonDecrease;
+    [SerializeField] private Button musicButtonIncrease;
+    [SerializeField] private Button musicButtonDecrease;
     [SerializeField] private Button closeButton;
     [SerializeField] private Button moveUpButton;
     [SerializeField] private Button moveDownButton;
@@ -42,14 +44,24 @@ public class OptionsUI : MonoBehaviour
     {
         Instance = this;
 
-        soundEffectsButton.onClick.AddListener(() =>
+        soundEffectsButtonIncrease.onClick.AddListener(() =>
         {
-            SoundManager.Instance.ChangeVolume();
+            SoundManager.Instance.IncreaseVolume();
             UpdateVisual();
         });
-        musicButton.onClick.AddListener(() =>
+        soundEffectsButtonDecrease.onClick.AddListener(() =>
         {
-            MusicManager.Instance.ChangeVolume();
+            SoundManager.Instance.DecreaseVolume();
+            UpdateVisual();
+        });
+        musicButtonIncrease.onClick.AddListener(() =>
+        {
+            MusicManager.Instance.IncreaseVolume();
+            UpdateVisual();
+        });
+        musicButtonDecrease.onClick.AddListener(() =>
+        {
+            MusicManager.Instance.DecreaseVolume();
             UpdateVisual();
         });
         closeButton.onClick.AddListener(() =>
@@ -108,7 +120,7 @@ public class OptionsUI : MonoBehaviour
 
         gameObject.SetActive(true);
 
-        soundEffectsButton.Select();
+        soundEffectsButtonDecrease.Select();
     }
 
     private void Hide()

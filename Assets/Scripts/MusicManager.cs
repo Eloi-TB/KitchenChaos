@@ -21,17 +21,30 @@ public class MusicManager : MonoBehaviour
         audioSource.volume = volume;
     }
 
-    public void ChangeVolume()
+    public void IncreaseVolume()
     {
-        volume += .1f;
-        if (volume > 1.05f)
+        if (volume < .95f)
         {
-            volume = 0f;
-        }
-        audioSource.volume = volume;
+            volume += .1f;
 
-        PlayerPrefs.SetFloat(PLAYER_PREFS_MUSIC_VOLUME, volume);
-        PlayerPrefs.Save();
+            audioSource.volume = volume;
+
+            PlayerPrefs.SetFloat(PLAYER_PREFS_MUSIC_VOLUME, volume);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public void DecreaseVolume()
+    {
+        if (volume > .1f)
+        {
+            volume -= .1f;
+
+            audioSource.volume = volume;
+
+            PlayerPrefs.SetFloat(PLAYER_PREFS_MUSIC_VOLUME, volume);
+            PlayerPrefs.Save();
+        }
     }
 
     public float GetVolume()

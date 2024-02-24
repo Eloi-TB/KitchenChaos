@@ -92,16 +92,26 @@ public class SoundManager : MonoBehaviour
         PlaySound(audioClipRefsSO.warning, position);
     }
 
-    public void ChangeVolume()
+    public void IncreaseVolume()
     {
-        volume += .1f;
-        if (volume > 1.05f)
+        if (volume < .95f)
         {
-            volume = 0f;
-        }
+            volume += .1f;
 
-        PlayerPrefs.SetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, volume);
-        PlayerPrefs.Save();
+            PlayerPrefs.SetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, volume);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public void DecreaseVolume()
+    {
+        if (volume > .1f)
+        {
+            volume -= .1f;
+
+            PlayerPrefs.SetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, volume);
+            PlayerPrefs.Save();
+        }
     }
 
     public float GetVolume()
