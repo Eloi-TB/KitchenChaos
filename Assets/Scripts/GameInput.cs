@@ -199,6 +199,7 @@ public class GameInput : MonoBehaviour
                 string newKey = callback.selectedControl.displayName;
                 Debug.Log(newKey);
                 if (!IsKeyAlreadyBound(newKey, binding))
+                if (!IsKeyAlreadyBound(newKey, binding) && newKey.Equals("Any Key", StringComparison.OrdinalIgnoreCase))
                 {
                     playerInputActions.Player.Enable();
 
