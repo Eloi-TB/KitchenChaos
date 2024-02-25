@@ -199,8 +199,6 @@ public class GameInput : MonoBehaviour
                 // TODO: Differentiate between keyboard and gamepad buttons
                 string newKey = callback.selectedControl.displayName;
                 Debug.Log(newKey);
-                if (!IsKeyAlreadyBound(newKey, binding))
-                if (!IsKeyAlreadyBound(newKey, binding) && newKey.Equals("Any Key", StringComparison.OrdinalIgnoreCase))
                 if (!IsKeyAlreadyBound(newKey, binding) && !newKey.Equals(ANY_KEY, StringComparison.OrdinalIgnoreCase))
                 {
                     playerInputActions.Player.Enable();
