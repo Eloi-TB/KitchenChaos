@@ -218,7 +218,6 @@ public class GameInput : MonoBehaviour
                 onActionRebound();
             })
             .Start();
-        // playerInputActions.RemoveAllBindingOverrides(); // Reset all keybindings saved
     }
 
     public bool IsKeyAlreadyBound(string newBinding, Binding bindingToRebind)
@@ -237,4 +236,8 @@ public class GameInput : MonoBehaviour
         return false;
     }
 
+    public void RestoreDefaultBindings()
+    {
+        playerInputActions.RemoveAllBindingOverrides();
+    }
 }

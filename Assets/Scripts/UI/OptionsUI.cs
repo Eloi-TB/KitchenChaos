@@ -24,6 +24,7 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private Button gamepadInteractButton;
     [SerializeField] private Button gamepadInteractAlternateButton;
     [SerializeField] private Button gamepadPauseButton;
+    [SerializeField] private Button restoreDefaultBindingsButton;
     [SerializeField] private TextMeshProUGUI soundEffectsText;
     [SerializeField] private TextMeshProUGUI musicText;
     [SerializeField] private TextMeshProUGUI moveUpText;
@@ -63,6 +64,10 @@ public class OptionsUI : MonoBehaviour
         {
             MusicManager.Instance.DecreaseVolume();
             UpdateVisual();
+        });
+        restoreDefaultBindingsButton.onClick.AddListener(() =>
+        {
+            RestoreDefaultBindings();
         });
         closeButton.onClick.AddListener(() =>
         {
@@ -145,5 +150,11 @@ public class OptionsUI : MonoBehaviour
             HidePressToRebindKey();
             UpdateVisual();
         });
+    }
+
+    private void RestoreDefaultBindings()
+    {
+        GameInput.Instance.RestoreDefaultBindings();
+        UpdateVisual();
     }
 }
